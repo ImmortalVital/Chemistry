@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Cars classificatory</title>
+    <title>Tanks classificatory</title>
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
@@ -204,38 +204,6 @@
                 }, 300);
             });
 
-            $("#delete-class-button").click(function(e){
-                e.preventDefault();
-
-                var resultBlock = $("#results");
-
-                $(resultBlock).removeClass("expanded");
-                setTimeout(function(){
-
-                    var formData = new FormData(document.getElementById("compute_form"));
-                    var r = new XMLHttpRequest();
-
-                    r.open("POST", '/delclass');
-                    r.setRequestHeader("ContentType", 'multipart/form-data');
-                    r.onreadystatechange = function () {
-                        if (r.readyState == 4) {
-                            if (r.status != 200) {
-                                alert(r.responseText);
-                            } else {
-                                var result = r.responseText;
-                                var resultHtml = "Delete result: <br /><br />";
-
-                                resultHtml += "Success! Class \""+result+"\" deleted!";
-                                resultHtml += "<br />";
-                                $(resultBlock).html(resultHtml);
-                                $(resultBlock).addClass("expanded");
-                            }
-                        }
-                    };
-                    r.send(formData);
-                }, 300);
-            });
-
             $("#submit-param-button").click(function(e){
                 e.preventDefault();
 
@@ -306,6 +274,38 @@
                 }, 300);
             });
 
+            $("#delete-class-button").click(function(e){
+                e.preventDefault();
+
+                var resultBlock = $("#results");
+
+                $(resultBlock).removeClass("expanded");
+                setTimeout(function(){
+
+                    var formData = new FormData(document.getElementById("new_class_form"));
+                    var r = new XMLHttpRequest();
+
+                    r.open("POST", '/delclass');
+                    r.setRequestHeader("ContentType", 'multipart/form-data');
+                    r.onreadystatechange = function () {
+                        //if (r.readyState == 4) {
+                           // if (r.status != 200) {
+                             //   alert(r.responseText);
+                            //} else {
+                                var result = r.responseText;
+                                var resultHtml = "Delete result: <br /><br />";
+
+                                resultHtml += "Success! Class \""+result+"\" deleted!";
+                                resultHtml += "<br />";
+                                $(resultBlock).html(resultHtml);
+                                $(resultBlock).addClass("expanded");
+                           // }
+                        //}
+                    };
+                    r.send(formData);
+                }, 300);
+            });
+
             $(".submit-class-param-button").click(function(e){
                 e.preventDefault();
 
@@ -332,6 +332,38 @@
                                 $(caller).css("visibility", "hidden");
                             }
                         }
+                    };
+                    r.send(formData);
+                }, 300);
+            });
+
+            $("#delete-param-button").click(function(e){
+                e.preventDefault();
+
+                var resultBlock = $("#results");
+
+                $(resultBlock).removeClass("expanded");
+                setTimeout(function(){
+
+                    var formData = new FormData(document.getElementById("new_param_form"));
+                    var r = new XMLHttpRequest();
+
+                    r.open("POST", '/delparam');
+                    r.setRequestHeader("ContentType", 'multipart/form-data');
+                    r.onreadystatechange = function () {
+                        //if (r.readyState == 4) {
+                        // if (r.status != 200) {
+                        //   alert(r.responseText);
+                        //} else {
+                        var result = r.responseText;
+                        var resultHtml = "Delete result: <br /><br />";
+
+                        resultHtml += "Success! Param \""+result+"\" deleted!";
+                        resultHtml += "<br />";
+                        $(resultBlock).html(resultHtml);
+                        $(resultBlock).addClass("expanded");
+                        // }
+                        //}
                     };
                     r.send(formData);
                 }, 300);

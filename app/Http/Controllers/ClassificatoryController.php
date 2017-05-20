@@ -69,7 +69,23 @@ class ClassificatoryController extends Controller
 
     function delClass(Request $request) {
         $newClassName = strtolower($request->class_name);
-        ClassParam::where('name', '=', $newClassName)->delete();
+        $newClass = new ClassModel;
+        $newClass->name = $newClassName;;
+        $classId = ClassModel::where('name', $newClass->name)->pluck('id');
+        $classParamId = ClassParam::where('class_id', $classId)->pluck('id');
+        $classParamValueId = ClassParam::where('class_id', $classId)->pluck('value_id');
+
+        // Удаляем параметры класса
+        for($i = 0; $i < count($classParamId); $i++) {
+            ClassParam::where('id', '=', $classParamId[$i])->delete();
+        }
+        // Удаляем значения
+        for($j = 0; $j < count($classParamValueId); $j++) {
+            Value::where('id', '=', $classParamValueId[$j])->delete();
+        }
+        // Удаляем класс
+        ClassModel::where('name', '=', $newClass->name)->delete();
+        return $newClassName;
     }
 
     function addParam (Request $request) {
@@ -94,6 +110,23 @@ class ClassificatoryController extends Controller
 
             $newClassParam->save();
         }
+
+        return $newParamName;
+    }
+
+    function delParam (Request $request) {
+        $newParamName = strtolower($request->param_name);
+
+        $newParam = new Param();
+        $newParam->name = $newParamName;
+        $paramId = Param::where('name', $newParam->name)->pluck('id');
+        $classParamId = ClassParam::where('param_id', $paramId)->pluck('id');
+
+        for ($i = 0; $i < count($classParamId); $i++) {
+            ClassParam::where('id', '=', $classParamId[$i])->delete();
+
+        }
+        Param::where('id', '=', $paramId)->delete();
 
         return $newParamName;
     }

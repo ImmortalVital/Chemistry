@@ -17,6 +17,7 @@
         </div>
 
         <input type="submit" value="Add param!" id="submit-param-button">
+        <input type="submit" value="Delete param!" id="delete-param-button">
     </form>
 
 
