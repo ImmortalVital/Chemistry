@@ -124,12 +124,20 @@ class ClassificatoryController extends Controller
         $newParam->name = $newParamName;
         $paramId = Param::where('name', $newParam->name)->pluck('id');
         $classParamId = ClassParam::where('param_id', $paramId)->pluck('id');
+        $classParamValueId = ClassParam::where('param_id', $paramId)->pluck('value_id');
+
 
         for ($i = 0; $i < count($classParamId); $i++) {
             ClassParam::where('id', '=', $classParamId[$i])->delete();
 
         }
         Param::where('id', '=', $paramId)->delete();
+
+        // Удаляем значения
+        for($i = 0; $i < count($classParamValueId); $i++) {
+            Value::where('id', '=', $classParamValueId[$i])->delete();
+        }
+
 
         return $newParamName;
     }
