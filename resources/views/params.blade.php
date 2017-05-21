@@ -3,8 +3,7 @@
 @section("content")
 
     @foreach($params as $param)
-        <H3>{{$param->name}} <span class="delete-button"></span></H3>
-        ---------------------
+        <H3>{{$param->name}} <span class="delete-button"></span> <br>---------------------</H3>
     @endforeach
 
     <br />

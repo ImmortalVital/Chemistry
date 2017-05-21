@@ -122,7 +122,7 @@
 
         .class-param b {
             display: inline-block;
-            width: 100px;
+            width: 200px;
         }
 
         input[type="number"] {
