@@ -3,21 +3,21 @@
 @section("content")
 
     @foreach($params as $param)
-        <H3>{{$param->name}} <span class="delete-button">[X]</span></H3>
+        <H3>{{$param->name}} <span class="delete-button"></span></H3>
+        ---------------------
     @endforeach
 
     <br />
-
     <form id="new_param_form">
-        <H3>New param <span class="add-button">[+]</span></H3>
+        <H3>Новый параметр <span class="add-button"></span></H3>
         {{csrf_field()}}
 
         <div class="class-param">
-            <b>Param name:</b> <input type="text" name="param_name" placeholder="type new param name">
+            <b>Имя параметра:</b> <input type="text" name="param_name" placeholder="введите название параметра">
         </div>
 
-        <input type="submit" value="Add param!" id="submit-param-button">
-        <input type="submit" value="Delete param!" id="delete-param-button">
+        <input type="submit" value="Добавить" id="submit-param-button">
+        <input type="submit" value="Удалить" id="delete-param-button">
     </form>
 
 

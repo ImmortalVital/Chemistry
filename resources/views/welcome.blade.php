@@ -2,7 +2,7 @@
 
 @section("content")
     <form id="compute_form">
-        <H3>Find suitable classes</H3>
+        <H3>Определить подходящие классы</H3>
         {{csrf_field()}}
 
         @foreach ($params as $param)
@@ -15,7 +15,7 @@
         <br />
         <br />
         <br />
-        <input type="submit" value="Check class!" id="submit-suitable-button">
+        <input type="submit" value="Проверить" id="submit-suitable-button">
     </form>
 
 

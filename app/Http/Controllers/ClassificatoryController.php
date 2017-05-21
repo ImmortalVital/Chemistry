@@ -79,12 +79,15 @@ class ClassificatoryController extends Controller
         for($i = 0; $i < count($classParamId); $i++) {
             ClassParam::where('id', '=', $classParamId[$i])->delete();
         }
+
+        // Удаляем класс
+        ClassModel::where('name', '=', $newClass->name)->delete();
+
         // Удаляем значения
         for($j = 0; $j < count($classParamValueId); $j++) {
             Value::where('id', '=', $classParamValueId[$j])->delete();
         }
-        // Удаляем класс
-        ClassModel::where('name', '=', $newClass->name)->delete();
+
         return $newClassName;
     }
 

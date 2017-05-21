@@ -187,7 +187,7 @@
                                 alert(r.responseText);
                             } else {
                                 var result = JSON.parse(r.responseText);
-                                var resultHtml = "Suitable classes: <br /><br />";
+                                var resultHtml = "Подходящие классы: <br /><br />";
 
                                 for(var i = 0; i < result.length; i++) {
                                     resultHtml += result[i] + "<br />";
@@ -224,11 +224,11 @@
                                 alert(r.responseText);
                             } else {
                                 var result = r.responseText;
-                                var resultHtml = "Adding result: <br /><br />";
+                                var resultHtml = "Результат добавления: <br /><br />";
 
-                                resultHtml += "Success! Param \""+result+"\" created!";
+                                resultHtml += "Параметр \""+result+"\" создан!";
                                 resultHtml += "<br />";
-                                resultHtml += "<a href=\"/classes\">Click here to set this param to all existing classes!</a>";
+                                resultHtml += "<a href=\"/params\">Нажмите чтобы обновить список параметров!</a>";
 
                                 $(resultBlock).html(resultHtml);
                                 $(resultBlock).addClass("expanded");
@@ -259,11 +259,11 @@
                                 alert(r.responseText);
                             } else {
                                 var result = r.responseText;
-                                var resultHtml = "Adding result: <br /><br />";
+                                var resultHtml = "Результат добавления: <br /><br />";
 
-                                resultHtml += "Success! Class \""+result+"\" created!";
+                                resultHtml += "Класс \""+result+"\" создан!";
                                 resultHtml += "<br />";
-                                resultHtml += "<a href=\"/classes\">Do not forget to set all class params! Click here!</a>";
+                                resultHtml += "<a href=\"/classes\">Нажмите чтобы обновить список классов!</a>";
 
                                 $(resultBlock).html(resultHtml);
                                 $(resultBlock).addClass("expanded");
@@ -293,10 +293,11 @@
                              //   alert(r.responseText);
                             //} else {
                                 var result = r.responseText;
-                                var resultHtml = "Delete result: <br /><br />";
+                                var resultHtml = "Результат удаления: <br /><br />";
 
-                                resultHtml += "Success! Class \""+result+"\" deleted!";
+                                resultHtml += "Класс \""+result+"\" удалён!";
                                 resultHtml += "<br />";
+                                resultHtml += "<a href=\"/classes\">Нажмите чтобы обновить список классов!</a>";
                                 $(resultBlock).html(resultHtml);
                                 $(resultBlock).addClass("expanded");
                            // }
@@ -356,10 +357,11 @@
                         //   alert(r.responseText);
                         //} else {
                         var result = r.responseText;
-                        var resultHtml = "Delete result: <br /><br />";
+                        var resultHtml = "Результат удаления: <br /><br />";
 
-                        resultHtml += "Success! Param \""+result+"\" deleted!";
+                        resultHtml += "Параметр \""+result+"\" удалён!";
                         resultHtml += "<br />";
+                        resultHtml += "<a href=\"/params\">Нажмите чтобы обновить список параметров!</a>";
                         $(resultBlock).html(resultHtml);
                         $(resultBlock).addClass("expanded");
                         // }
@@ -390,9 +392,9 @@
         </div>
 
         <div class="links">
-            <a href="/">Home</a>
-            <a href="/classes">Manage classes</a>
-            <a href="/params">Manage params</a>
+            <a href="/">Главная</a>
+            <a href="/classes">Редактор классов</a>
+            <a href="/params">Редактор параметров</a>
             <a href="/classes">How it works</a>
             <a href="/classes">About</a>
         </div>

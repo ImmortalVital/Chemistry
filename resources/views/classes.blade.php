@@ -2,7 +2,7 @@
 
 @section("content")
     @foreach($classes as $class)
-        <H3>{{$class[0]->_class->name}} <span class="delete-button">[X]</span></H3>
+        <H3>{{$class[0]->_class->name}} <span class="delete-button"></span></H3>
         @foreach($class as $param)
             <div class="class-param">
                 <form class="edit-class-param">
@@ -20,19 +20,20 @@
             </div>
         @endforeach
         <br /><br />
+        ---------------------
     @endforeach
 
     <form id="new_class_form">
-        <H3>New class <span class="add-button">[+]</span></H3>
+        <H3>Новый класс <span class="add-button"></span></H3>
         {{csrf_field()}}
 
         <div class="class-param">
-            <b>Class name:</b> <input type="text" name="class_name" placeholder="type new class name">
+            <b>Имя класса</b> <input type="text" name="class_name" placeholder="введите название класса">
         </div>
 
-        <input type="submit" value="Add class!" id="submit-class-button">
+        <input type="submit" value="Добавить" id="submit-class-button">
         <br /><br />
-        <input type="submit" value="Delete class!" id="delete-class-button">
+        <input type="submit" value="Удалить" id="delete-class-button">
     </form>
 
 
