@@ -57,21 +57,20 @@
             font-weight: 600;
             letter-spacing: .1rem;
             text-decoration: none;
-            text-transform: uppercase;
         }
 
         .m-b-md {
             margin-bottom: 30px;
+            font-size: 40px;
+            font-weight: 600;
         }
 
         #results {
-            margin-top: 2vw;
             color: #636b6f;
-            font-size: 16px;
+            font-size: 40px;
             font-weight: 600;
             letter-spacing: .1rem;
             text-decoration: none;
-            text-transform: uppercase;
             height: 0;
             opacity: 0;
             overflow: hidden;
@@ -79,8 +78,62 @@
         }
 
         #results.expanded {
-            height: 300px;
+            height: 100px;
             opacity: 1;
+        }
+
+        #formula {
+            color: #636b6f;
+            font-size: 40px;
+            font-weight: 100;
+            margin: 0;
+        }
+
+        button[type="button"] {
+            background-color: #EEEEEE;
+            color: #333333;
+            font-family: 'Raleway', sans-serif;
+            font-weight: 800;
+            letter-spacing: .1rem;
+            text-decoration: none;
+            text-transform: uppercase;
+            border: 1px solid #aaa;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        button[type="button"]:hover {
+            background-color: #CCC;
+            border: 4px solid #AAA;
+        }
+
+        button[type="reset"] {
+            width: 150px;
+            height: 50px;
+            background-color: #EEEEEE;
+            color: #333333;
+            font-family: 'Raleway', sans-serif;
+            font-weight: 800;
+            letter-spacing: .1rem;
+            text-decoration: none;
+            text-transform: uppercase;
+            border: 1px solid #aaa;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        button[type="reset"]:hover {
+            background-color: #CCC;
+            border: 15px solid #AAA;
+        }
+
+        input[type="string"] {
+            font-weight: 800;
+            letter-spacing: .1rem;
+            text-decoration: none;
+            border: 1px solid #aaa;
+            transition: all 0.3s;
+            cursor: pointer;
         }
 
         input[type="submit"] {
@@ -129,9 +182,6 @@
             width: 75px;
         }
 
-        input[type="text"] {
-            width: 260px;
-        }
 
         .delete-button {
             color: #c40000;
@@ -230,6 +280,7 @@
                                 resultHtml += "<br />";
                                 resultHtml += "<a href=\"/params\">Нажмите чтобы обновить список параметров!</a>";
 
+
                                 $(resultBlock).html(resultHtml);
                                 $(resultBlock).addClass("expanded");
                             }
@@ -261,9 +312,12 @@
                                 var result = r.responseText;
                                 var resultHtml = "Результат добавления: <br /><br />";
 
-                                resultHtml += "Класс \""+result+"\" создан!";
-                                resultHtml += "<br />";
-                                resultHtml += "<a href=\"/classes\">Нажмите чтобы обновить список классов!</a>";
+                                if (result == '') {
+                                    resultHtml+= "Введите название";
+                                } else {
+                                    resultHtml += "Класс \""+result+"\" создан!";
+                                    location.reload(true);
+                                }
 
                                 $(resultBlock).html(resultHtml);
                                 $(resultBlock).addClass("expanded");
@@ -370,6 +424,71 @@
                     r.send(formData);
                 }, 300);
             });
+
+
+            $("#hidrogenium-button").click(function(e){
+                e.preventDefault();
+                document.getElementById('formula').value += "H";
+            });
+
+            $("#oxygenium-button").click(function(e){
+                e.preventDefault();
+                document.getElementById('formula').value += "O";
+            });
+
+            $("#natrium-button").click(function(e){
+                e.preventDefault();
+                document.getElementById('formula').value += "Na";
+            });
+
+            $("#sulfur-button").click(function(e){
+                e.preventDefault();
+                document.getElementById('formula').value += "S";
+            });
+            $("#chlorine-button").click(function(e){
+                e.preventDefault();
+                document.getElementById('formula').value += "Cl";
+            });
+
+
+
+
+            $("#submit-formula-button").click(function(e){
+                e.preventDefault();
+
+                var resultBlock = $("#results");
+
+                $(resultBlock).removeClass("expanded");
+
+                setTimeout(function(){
+
+                    var formData = new FormData(document.getElementById("chem_el_form"));
+                    var r = new XMLHttpRequest();
+
+                    r.open("POST", '/addSubsPossibleFormula');
+                    r.setRequestHeader("ContentType", 'multipart/form-data');
+                    r.onreadystatechange = function () {
+                        if (r.readyState == 4) {
+                            if (r.status != 200) {
+                                alert(r.responseText);
+                            } else {
+                                var result = r.responseText;
+
+                                var resultHtml = "Тестовый вывод";
+                                resultHtml += "<br />";
+                                resultHtml += "\""+result+"\"";
+                                resultHtml += "<br />";
+
+
+                                $(resultBlock).html(resultHtml);
+                                $(resultBlock).addClass("expanded");
+                            }
+                        }
+                    };
+                    r.send(formData);
+                }, 300);
+            });
+
         });
     </script>
 </head>
@@ -388,13 +507,14 @@
 
     <div class="content">
         <div class="title m-b-md">
-            Tanks classificatory
+            Редактор элементарной формулы химических соединений
         </div>
 
         <div class="links">
             <a href="/">Главная</a>
-            <a href="/classes">Редактор классов</a>
-            <a href="/params">Редактор параметров</a>
+            <a href="/params">Редактор базы знаний</a>
+            <!--<a href="/classes">Редактор классов</a>
+            <a href="/params">Редактор параметров</a>-->
             <a href="/classes">How it works</a>
             <a href="/classes">About</a>
         </div>

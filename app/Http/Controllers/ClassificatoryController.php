@@ -6,6 +6,7 @@ use App\ClassModel;
 use App\ClassParam;
 use App\Param;
 use App\Value;
+use App\Chemical_subs_possible_formules;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -92,7 +93,7 @@ class ClassificatoryController extends Controller
     }
 
     function addParam (Request $request) {
-        $newParamName = strtolower($request->param_name);
+        $newParamName = $request->param_name;
 
         $newParam = new Param;
         $newParam->name = $newParamName;
@@ -204,5 +205,20 @@ class ClassificatoryController extends Controller
         }
 
         return $resultClasses;
+    }
+
+    function addSubsPossibleFormula (Request $request) {
+        $newFormulaText = $request->formula;
+
+        //$newFormula = new Chemical_subs_possible_formules;
+        //$newFormula->name = $newFormulaText;
+        //$newFormula->save();
+
+        $testString = "";
+        for ($i = 0; $i < strlen($newFormulaText); $i++) {
+            $testString .= $newFormulaText{$i};
+        }
+
+        return $testString;
     }
 }
