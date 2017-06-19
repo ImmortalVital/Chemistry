@@ -121,23 +121,20 @@ class ClassificatoryController extends Controller
     function delParam (Request $request) {
         $newParamName = strtolower($request->param_name);
 
-        $newParam = new Param();
-        $newParam->name = $newParamName;
-        $paramId = Param::where('name', $newParam->name)->pluck('id');
-        $classParamId = ClassParam::where('param_id', $paramId)->pluck('id');
-        $classParamValueId = ClassParam::where('param_id', $paramId)->pluck('value_id');
+        $param = Param::select("id")
+            ->where('name', $newParamName)
+            ->first();
 
+        $classParams = ClassParam::select("id", "value_id")
+            ->where('param_id', $param->id)
+            ->get();
 
-        for ($i = 0; $i < count($classParamId); $i++) {
-            ClassParam::where('id', '=', $classParamId[$i])->delete();
-
+        foreach ($classParams as $classParam) {
+            ClassParam::where('id', $classParam->id)->delete();
+            Value::where('id', $classParam->value_id)->delete();
         }
-        Param::where('id', '=', $paramId)->delete();
 
-        // Удаляем значения
-        for($i = 0; $i < count($classParamValueId); $i++) {
-            Value::where('id', '=', $classParamValueId[$i])->delete();
-        }
+        $param->delete();
 
 
         return $newParamName;

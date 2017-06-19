@@ -67,7 +67,7 @@
 
         #results {
             color: #636b6f;
-            font-size: 40px;
+            font-size: 30px;
             font-weight: 600;
             letter-spacing: .1rem;
             text-decoration: none;
@@ -78,7 +78,7 @@
         }
 
         #results.expanded {
-            height: 100px;
+            height: 200px;
             opacity: 1;
         }
 
@@ -87,6 +87,41 @@
             font-size: 40px;
             font-weight: 100;
             margin: 0;
+        }
+
+        #close-button {
+            width: 100px;
+            height: 20px;
+            background-color: #EEEEEE;
+            color: #333333;
+            font-family: 'Raleway', sans-serif;
+            font-weight: 300;
+            letter-spacing: .1rem;
+            text-decoration: none;
+            text-transform: uppercase;
+            border: 1px solid #aaa;
+            transition: all 0.3s;
+            cursor: pointer;
+            display: none;
+            margin: 10px;
+        }
+        .furmula-form {
+            width:  550px;
+            margin: 0 auto;
+        }
+
+        .furmula-form > div:hover{
+            box-shadow: 0 0px 20px rgba(38, 128, 162, 0.52);
+        }
+
+        .furmula-form > div{
+            text-align: center;
+
+            display: table-cell;
+            vertical-align: top;
+
+            padding: 0px;
+            padding-bottom: 0px;
         }
 
         button[type="button"] {
@@ -137,7 +172,7 @@
         }
 
         input[type="submit"] {
-            width: 150px;
+            width: 200px;
             height: 50px;
             background-color: #EEEEEE;
             color: #333333;
@@ -183,7 +218,7 @@
         }
 
 
-        .delete-button {
+        .close-button {
             color: #c40000;
             cursor: pointer;
         }
@@ -205,7 +240,10 @@
     </style>
 
     <script>
+
         $(document).ready(function(){
+            $("#erase-button").removeClass("button");
+
             $(".editing-value").change(function(){
                 var parent = $(this).closest("form");
                 var button = $(parent).find("input[type='submit']");
@@ -425,29 +463,104 @@
                 }, 300);
             });
 
+            function chekReg(uCode) {
+                var isLow = false;
+                for (var i = 97; i < 123; i++) {
+                    if (uCode == i) {
+                        isLow = true;
+                    }
+                }
+                return isLow;
+            }
+
+            function eraseLast(str) {
+                var resStr = "";
+                if (chekReg(str.charCodeAt(str.length-1))) {
+                    for (var i = 0; i < str.length-2; i++) {
+                        resStr += str[i];
+                    }
+                    return resStr;
+                } else {
+                    for (var i = 0; i < str.length-1; i++) {
+                        resStr += str[i];
+                    }
+                    return resStr;
+                }
+            }
+
+            
+
+            function getCountEl(str) {
+                var num = str.length;
+                return str.charCodeAt(2);
+            }
+
+            function chemSplit ()
+            {
+
+            }
+
+
+            $("#erase-button").click(function(e){
+                e.preventDefault();
+                var str = document.getElementById('formula').value;
+
+                document.getElementById('formula').value = eraseLast(str);
+            });
+
+            $("#close-button").click(function(){
+                document.getElementById('results').style.display = 'none';
+                document.getElementById('close-button').style.display = 'none';
+            });
 
             $("#hidrogenium-button").click(function(e){
                 e.preventDefault();
-                document.getElementById('formula').value += "H";
+                if (document.getElementById('formula').value == "Введите формулу")
+                {
+                    document.getElementById('formula').value = "H";
+                } else {
+                    document.getElementById('formula').value += "H";
+                }
+
             });
 
             $("#oxygenium-button").click(function(e){
                 e.preventDefault();
-                document.getElementById('formula').value += "O";
+                if (document.getElementById('formula').value == "Введите формулу")
+                {
+                    document.getElementById('formula').value = "O";
+                } else {
+                    document.getElementById('formula').value += "O";
+                }
             });
 
             $("#natrium-button").click(function(e){
                 e.preventDefault();
-                document.getElementById('formula').value += "Na";
+                if (document.getElementById('formula').value == "Введите формулу")
+                {
+                    document.getElementById('formula').value = "Na";
+                } else {
+                    document.getElementById('formula').value += "Na";
+                }
             });
 
             $("#sulfur-button").click(function(e){
                 e.preventDefault();
-                document.getElementById('formula').value += "S";
+                if (document.getElementById('formula').value == "Введите формулу")
+                {
+                    document.getElementById('formula').value = "S";
+                } else {
+                    document.getElementById('formula').value += "S";
+                }
             });
             $("#chlorine-button").click(function(e){
                 e.preventDefault();
-                document.getElementById('formula').value += "Cl";
+                if (document.getElementById('formula').value == "Введите формулу")
+                {
+                    document.getElementById('formula').value = "Cl";
+                } else {
+                    document.getElementById('formula').value += "Cl";
+                }
             });
 
 
@@ -457,8 +570,12 @@
                 e.preventDefault();
 
                 var resultBlock = $("#results");
+                var closeButton = $("#close-button");
+                document.getElementById('results').style.display = '';
+                document.getElementById('close-button').style.display = 'inline';
 
-                $(resultBlock).removeClass("expanded");
+
+                $(resultBlock).removeClass("expanded"); // Убирает CSS класс
 
                 setTimeout(function(){
 
@@ -466,23 +583,39 @@
                     var r = new XMLHttpRequest();
 
                     r.open("POST", '/addSubsPossibleFormula');
-                    r.setRequestHeader("ContentType", 'multipart/form-data');
+                    r.setRequestHeader("ContentType", 'multipart/form-data');// Для загрузки файлов
                     r.onreadystatechange = function () {
-                        if (r.readyState == 4) {
-                            if (r.status != 200) {
-                                alert(r.responseText);
-                            } else {
-                                var result = r.responseText;
+                        if (document.getElementById('formula').value != "") {
+                            if (r.readyState == 4) {
+                                if (r.status != 200) {
+                                    alert(r.responseText);
+                                } else {
+                                    var result = r.responseText;
+                                    var num = getCountEl("NaOH");
+                                    var isReg = eraseLast("HNa");
 
-                                var resultHtml = "Тестовый вывод";
-                                resultHtml += "<br />";
-                                resultHtml += "\""+result+"\"";
-                                resultHtml += "<br />";
+                                    var resultHtml = "Результат проверки формулы ";
+                                    resultHtml += "<br />";
+                                    resultHtml += "\"" + result + "\"" + num + " " + isReg;
+                                    resultHtml += "<br />";
+
+                                    resultHtml += "Результат идентификации";
+                                    resultHtml += "<br />";
+                                    resultHtml += "\"" + result + "\"";
+                                    resultHtml += "<br />";
 
 
-                                $(resultBlock).html(resultHtml);
-                                $(resultBlock).addClass("expanded");
+                                    $(resultBlock).html(resultHtml);
+                                    $(resultBlock).addClass("expanded");// CSS стиль!
+                                }
                             }
+                        } else {
+                            var resultHtml = "\"" + "Не введена формула" + "\"";
+                            resultHtml += "<br />";
+
+
+                            $(resultBlock).html(resultHtml);
+                            $(resultBlock).addClass("expanded");// CSS стиль!
                         }
                     };
                     r.send(formData);
@@ -511,7 +644,7 @@
         </div>
 
         <div class="links">
-            <a href="/">Главная</a>
+            <a href="/">Задание исходных данных</a>
             <a href="/params">Редактор базы знаний</a>
             <!--<a href="/classes">Редактор классов</a>
             <a href="/params">Редактор параметров</a>-->

@@ -19,11 +19,16 @@
         {{csrf_field()}}
 
         <div class="furmula-form">
-            <input type="text" name="formula" id="formula">
+            <div>
+            <input type="text" value="Введите формулу" name="formula" id="formula">
+            </div>
+            <div>
+                <input type="image" id="erase-button" src="images/erase-button.png" style="width:50px;height:50px;vertical-align:middle;">
+            </div>
         </div>
         <br />
 
-        <input type="submit" value="Test" id="submit-formula-button">
+        <input type="submit" value="Задать формулу" id="submit-formula-button">
         <br />
         <br />
     </form>
@@ -31,6 +36,7 @@
     <div class="links" id="results">
         Result
     </div>
+    <input type="submit" value="Скрыть" id="close-button">
 
     <form>
         <button type="button" id="hidrogenium-button" style="padding:0px 0px;">
